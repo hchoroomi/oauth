@@ -37,7 +37,7 @@ module OAuth::RequestProxy
 
       unless options[:clobber_request]
         params << header_params.to_query
-        params << request.query_string unless request.query_string.blank?
+        params << CGI.unescape(request.query_string) unless request.query_string.blank?
         if request.content_type == Mime::Type.lookup("application/x-www-form-urlencoded")
           params << CGI.unescape(request.raw_post)
         end
